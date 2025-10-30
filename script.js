@@ -23,8 +23,19 @@ let lockBoard = false;
 */
 function initGame() {
     // Write your code here
-
     document.getElementById('restart-btn').addEventListener('click', initGame);
+    const gameBoard = document.getElementById('game-board');
+    gameBoard.innerHTML = ''; // Clear the board
+    cards = []; // Reset cards array
+    resetBoard()
+    shuffleArray(symbols)
+    for(let i = 0; i < symbols.length; i++){
+        createCard(symbols[i])
+    }
+    shuffleArray(symbols)
+    for(let i = 0; i < symbols.length; i++){
+        createCard(symbols[i])
+    }
 }
 
 /*
@@ -34,7 +45,16 @@ function initGame() {
 */
 function createCard(symbol) {
     // Write your code here
+    const gameBoard = document.getElementById('game-board')
+    let card = document.createElement('button')
+    card.setAttribute('value', 'symbol')
+    card.setAttribute('class', 'card')
+    card.setAttribute('class', 'card')
+    card.addEventListener('click', () => flipCard(card));
+    gameBoard.appendChild(card);
+    cards.push(card);
 }
+
 
 /*
     This function will handle all the logic for flipping the card. You can check if a variable doesn't
@@ -48,6 +68,15 @@ function flipCard(card) {
     // If the board is supposed to be locked or you picked the same card you already picked
     if (lockBoard || card === firstCard) return;
     // Write your code here
+    if(!'value') return
+    card.setAttribute('class', 'flipped')
+    card.textContent = card.getAttribute('symbol');
+    if(firstCard === null){
+        firstCard = card
+    } else{
+        secondCard = card
+        checkForMatch(firstCard,secondCard)
+    }
 }
 
 /* 
@@ -57,6 +86,19 @@ function flipCard(card) {
 */
 function checkForMatch() {
     // Write your code here
+    if(firstCard.getAttribute(value) === secondCard.getAttribute(value)){
+        let index = cards.indexOf('firstCard');
+        let index2 = cards.indexOf('secondCard')
+        if (index > -1 && index2 > -1) {
+            cards.splice(index, 1);
+            cards.splice(index2, 1);
+        }
+        resetBoard()
+    } else{
+        firstCard.setAttribute('class', 'unflip')
+        secondCardCard.setAttribute('class', 'unflip')
+    }
+
 }
 
 /* 
@@ -66,6 +108,11 @@ function checkForMatch() {
 */
 function disableCards() {
     // Write your code here
+     if(firstCard.getAttribute(value) === secondCard.getAttribute(value)){
+        firstCard.setAttribute('class', 'matched')
+        secondCard.setAttribute('class', 'matched')
+        resetBoard()
+    }
 }
  
 /* ---------------------  Everything under has already been done for you -------------------------- */
