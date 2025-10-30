@@ -48,7 +48,7 @@ function createCard(symbol) {
     // Write your code here
     const gameBoard = document.getElementById('game-board')
     let card = document.createElement('button')
-    card.setAttribute('value', symbol)
+    card.setAttribute('symbol', symbol)
     card.className = 'card'
     card.addEventListener('click', () => flipCard(card));
     gameBoard.appendChild(card);
@@ -69,7 +69,6 @@ function flipCard(card) {
     // If the board is supposed to be locked or you picked the same card you already picked
     if (lockBoard || card === firstCard || card.classList.contains('matched')) return;
     // Write your code here
-    if(!'value') return
     card.classList.add('flipped')
     card.textContent = card.getAttribute('symbol');
     if(firstCard === null){
@@ -87,7 +86,7 @@ function flipCard(card) {
 */
 function checkForMatch() {
     // Write your code here
-    if(firstCard.getAttribute('value') === secondCard.getAttribute('value')){
+    if(firstCard.getAttribute('symbol') === secondCard.getAttribute('symbol')){
         disableCards()
     } else{
         unflipCards()
